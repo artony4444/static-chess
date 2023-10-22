@@ -28,13 +28,13 @@ class dragDrop
     addDragDrop(pieceImg)
     {
         let self = this;
-        
+        /*
         pieceImg.addEventListener("click", 
             function start(event)
             {
                 self.startDrag(event, pieceImg);
             });
-        
+        */
         pieceImg.addEventListener("touchstart",
             function start(event)
             {
@@ -54,7 +54,7 @@ class dragDrop
             });
         
         
-        
+        /*
         pieceImg.addEventListener("mousedown", 
             function start(event)
             {
@@ -72,6 +72,7 @@ class dragDrop
             {
                 self.stopDrag(event, pieceImg);
             });
+        */
     }
     
     
