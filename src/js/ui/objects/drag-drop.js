@@ -46,6 +46,20 @@ class dragDrop
             {
                 self.stopDrag(event, pieceImg);
             });
+        
+        
+        
+        pieceImg.addEventListener("mousedown", 
+            function move(event)
+            {
+                self.moveDrag(event, pieceImg);
+            });
+        
+        pieceImg.addEventListener("mouseup", 
+            function end(event)
+            {
+                self.stopDrag(event, pieceImg);
+            });
     }
     
     

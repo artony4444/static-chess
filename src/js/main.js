@@ -2,6 +2,9 @@
 var brd = new board("board1", "boardContainer1", color.w);
 
 
+/*
+//  DEBUG
+
 //brd.ui.boardCenterAnimation("CHECKMATE");
 //brd.ui.freezeAdd();
 //brd.ui.askPawnPromote(41);
