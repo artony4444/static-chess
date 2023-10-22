@@ -29,6 +29,12 @@ class dragDrop
     {
         let self = this;
         
+        pieceImg.addEventListener("click", 
+            function start(event)
+            {
+                self.startDrag(event, pieceImg);
+            });
+        
         pieceImg.addEventListener("touchstart",
             function start(event)
             {
