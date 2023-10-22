@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+    
+    <style>
+        
+        .box
+        {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .mover{}
+        
+        .captureMover
+        {
+            width: 90%;
+            height: 90%;
+            position: absolute;
+            
+            x: calc((100% - 90%) / 2);
+            y: calc((100% - 90%) / 2);
+            
+            rx: 30%;
+            fill: black;
+            stroke: black;
+            stroke-width: 1px;
+        }
+        
+        .captureMoverFill
+        {
+            fill: green;
+        }
+        
+        .background
+        {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+        
+    </style>
+    
+    
+</head>
+<body>
+    
+    
+    
+    
+    <div class="box">
+        
+        <svg class="background mover">
+            
+            <defs>
+                <mask id="captureMoverMask">
+                    <rect class="background" fill="white"/>
+                    <rect class="captureMover"/>
+                </mask>
+            </defs>
+            
+            <rect class="background captureMoverFill" mask="url(#captureMoverMask)">
+            
+        </svg>
+        
+    </div>
+    
+    
+    
+    
+    
+</body>
+</html>

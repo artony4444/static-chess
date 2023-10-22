@@ -1,0 +1,43 @@
+:root
+{
+    --margin: 10px;
+    --padding: 10px;
+    --borderRadius: 10px;
+    
+    //--testColor: #ffffff1b;
+    --dominantColor: #353635;
+    --secondaryColor: #262626;
+    --accentColor: #255C99;
+    --contrast: #e0e0e0;
+    
+    /* chess */
+/*                           blue       green       brown     old brown      */
+    --wSquare: #d9f3f7; // #d9f3f7; // #fefedd; // #ffedcf; // #ffe3b2;
+    --bSquare: #80b7cd; // #80b7cd; // #92b697; // #ac8169; // #b08661;
+    
+    --selection: #cfaa34;
+    --selectionOpacity: 35%;
+    --selectionBorder: 0;
+    
+    --collision: 100%;
+    
+    --boardSize: min(100vw, 100vh); // 380px;
+    --borderRadius: 0px;
+    
+    
+    --moveColor: #00000034; //color-mix(in srgb, #00000034 80%, var(--bSquare));
+    
+    --moveSize: 30%;
+    --moveRadius: 100%;
+}
+
+.lightMode
+{
+    --dominantColor: #DACEB9;
+    --secondaryColor: #e8e1df;
+    --contrast: #553e30;
+}
+
+.darkMode
+{
+}

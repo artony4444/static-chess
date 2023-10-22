@@ -1,0 +1,107 @@
+
+.block
+{
+    width: 100%;
+    background-color: var(--testColor);
+    color: var(--contrast);
+}
+
+.marginBlock
+{
+    width: calc(100% - var(--margin));
+    margin: var(--margin);
+    background-color: var(--testColor);
+    color: var(--contrast);
+}
+
+.paddingBlock
+{
+    width: 100%;
+    padding: var(--padding);
+    background-color: var(--testColor);
+    color: var(--contrast);
+}
+
+.marginPaddingBlock
+{
+    width: calc(100% - var(--margin) - var(--padding));
+    margin: var(--margin);
+    padding: var(--padding);
+    background-color: var(--testColor);
+    color: var(--contrast);
+}
+
+.card
+{
+    min-height: 50px;
+    padding: var(--padding);
+    border-radius: var(--borderRadius);
+    background-color: var(--accentColor);
+    color: var(--contrast);
+}
+
+.button
+{
+    width: fit-content;
+    padding: 10px;
+    
+    border-radius: var(--borderRadius);
+    
+    background-color: var(--accentColor);
+    color: var(--contrast);
+}
+
+
+.unselectable
+{
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
+    // credit : https://www.w3docs.com/snippets/javascript/how-to-disable-text-selection-copy-cut-paste-and-right-click-on-a-web-page.html
+    
+}
+
+.hidden
+{
+    visibility: hidden;
+}
+
+
+
+
+.fadeIn
+{
+    animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn
+{
+    0%
+    {
+        opacity: 0%;
+    }
+    100%
+    {
+        opacity: 100%
+    }
+}
+
+.fadeOut
+{
+    animation: fadeOut 0.8s;
+}
+
+@keyframes fadeOut
+{
+    0%
+    {
+        opacity: 100%;
+    }
+    100%
+    {
+        opacity: 0%
+    }
+}

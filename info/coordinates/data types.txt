@@ -1,0 +1,157 @@
+refer converter.js
+    
+    
+    3 types -
+
+        str  :    a1    a2     a3
+        int  :    11    12     13
+        ray  :  [0,0]  [0,1]  [0,1]
+
+
+    uses -
+        
+        str : basic notation
+        int : easy to work with
+        ray : access array[x][y]
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    explaination - 
+    
+    
+        int :
+        
+        
+        lets take 45,
+        
+        4 represents x
+        5 represents y
+        
+        xy = 45
+        
+        
+        
+        
+        so,
+        x = 4 * 10 = 40
+        y = 5 *  1 =  5
+        
+        
+        
+        int formula
+        int x = x * 10
+        int y = y * 01
+        
+        
+        
+        
+        using this,
+        lets go 1 square right
+        
+        
+        
+        like this (a1) >> (b1)
+                  (11) >> (21)
+        
+        
+        
+        we will add x to go right
+        
+        
+        11 + 10 = 21
+        (11) >> (21)
+        
+        
+        we will add y to go up
+        
+        
+        11 + 1 = 12
+        (11) >> (12)
+        
+        
+        
+        using this we can go anywere in the board,
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        - Detailed Explaination
+        
+        this sounds crazy but trust me it works fine.
+        numbers like 9 and 0 are nowhere in this data type,
+        I was not sure at first but it just work fine.
+        
+        
+        we can do something more than 10s and 1s
+        
+        for example,
+        
+        
+        [ problem ]
+        
+        we want to go 
+        from (a2) to
+        
+        right(2) 
+        down (1)
+        
+        which is
+        
+        from xy(12)
+        x (+2) 
+        y (-1)
+        
+        what will we do programically?
+        
+        
+        [ solution ]
+        
+        we have current pos xy(12) which is already intXY format
+        but we have to convert x and y to intXY
+        
+        we have,
+        
+        current position = 12
+        x = 2
+        y = -1
+        
+        we may do,
+        
+        int x = 20        (x * 10)
+        int y = -1        (y *  1)
+        
+        int xy = 19       (x + y)
+        
+        
+        current position + int xy = new position
+        
+        12 + 19 = (31) boom!!
+        
+        
+        
+        lets go left(2) and down(1) manually from (a2)
+        
+        a2 >> b2 >> c2 >> c1
+        
+        c1 = 31
+        
+        
+        at,
+        12 + 19 = (31)
+        9 and 0 is in this data type 
+        but not in final product.
+        
+        happy coding :)

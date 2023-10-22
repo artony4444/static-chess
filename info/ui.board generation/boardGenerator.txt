@@ -1,0 +1,84 @@
+
+                     •= Board Generator =•
+    
+    
+        Squares Print Order :-
+        
+        left >> right | up >> down
+        
+        ■  □  ■  □  ■  □  ■  □
+        □  ■  □  ■  □  ■  □  ■
+        ■  □ •••
+        
+        
+        
+        Default Print Order :
+        
+        
+        x  a  b  c  d  e  f  g  h
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8        
+        
+        
+        
+        reverse y[|]  =  ● white
+        
+        
+        8
+        7
+        6
+        5
+        4
+        3
+        2
+        1
+        x  a  b  c  d  e  f  g  h
+        
+        
+        
+        reverse x[-]  =  ○ black 
+        
+        
+        h  g  f  e  d  c  b  a  x
+                                1
+                                2
+                                3
+                                4
+                                5
+                                6
+                                7
+                                8
+        
+        
+        
+        
+        Chess Board Diagram :
+        
+        ■  □  ■  □  ■  □  ■  □
+        □  ■  □  ■  □  ■  □  ■
+        ■  □  ■  □  ■  □  ■  □
+        □  ■  □  ■  □  ■  □  ■
+        ■  □  ■  □  ■  □  ■  □
+        □  ■  □  ■  □  ■  □  ■
+        ■  □  ■  □  ■  □  ■  □
+        □  ■  □  ■  □  ■  □  ■
+        
+        Details :-
+        
+        - Starts with white square and
+          shifts between white black.
+          
+        - Next line it is same as last
+          color
+
+
+
+
+
+        refer - src/js/ui/ui.js/clear()

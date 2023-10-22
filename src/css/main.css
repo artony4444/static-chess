@@ -1,0 +1,48 @@
+html, body
+{
+    margin:0;
+    padding:0;
+    background-color: var(--secondaryColor);
+    //touch-action: none;
+}
+
+.screen
+{
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--secondaryColor);
+    color: var(--contrast);
+    
+    display: flex;
+    flex-direction: column;
+    
+    overflow: scroll;
+}
+
+.headBar
+{
+    padding: 0 10px;
+    
+    background-color: var(--dominantColor);
+    color: var(--contrast);
+    
+    flex: 0 0 calc(var(--boardSize)/8);
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.body
+{
+    background-color: var(--secondaryColor);
+    color: var(--contrast);
+    
+    flex: 1 1 0;
+    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
