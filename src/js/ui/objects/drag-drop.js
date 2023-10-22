@@ -50,6 +50,12 @@ class dragDrop
         
         
         pieceImg.addEventListener("mousedown", 
+            function start(event)
+            {
+                self.startDrag(event, pieceImg);
+            });
+        
+        pieceImg.addEventListener("mousemove", 
             function move(event)
             {
                 self.moveDrag(event, pieceImg);
