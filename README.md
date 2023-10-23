@@ -1,9 +1,10 @@
 page - [test now](https://artony4444.github.io/static-chess/)
 
 
+
 ## features
 
-`script`
+### script
 + legal moves generation
 + castle
 + enpassant
@@ -12,19 +13,21 @@ page - [test now](https://artony4444.github.io/static-chess/)
 + stalemate
 + FEN import
 
-`ui`
+### ui
 + drag drop
 + touch move
 + piece highlight
 + board construction
 
-`to add`
+### to add
 - insufficient material
 - moves history
 - pgn import
 - three fold repetition
 - board eval
 - bot
+
+
 
 ## files
 ```
@@ -49,4 +52,3 @@ js
 |    converter   :    converts different data types
 |
 ```
-these are the only js files used.
