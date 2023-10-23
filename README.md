@@ -11,6 +11,7 @@ page - [test now (mobile)](https://artony4444.github.io/static-chess/)
 + check
 + checkmate
 + stalemate
++ insufficient material
 + FEN import
 
 ### ui
@@ -20,7 +21,6 @@ page - [test now (mobile)](https://artony4444.github.io/static-chess/)
 + board construction
 
 ### to add
-- insufficient material
 - moves history
 - pgn import
 - three fold repetition
