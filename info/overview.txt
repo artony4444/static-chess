@@ -7,7 +7,7 @@ overview
     |    piece       :    stores name, color, moves
     |    square      :    stores piece
     |    board       :    stores 8x8 squares & manages moves
-    |    logic       :    filters illegal moves by managing moves and states.
+    |	 logic       :    filters illegal moves by managing moves and states.
     |
     |
     |-- ui

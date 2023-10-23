@@ -53,7 +53,6 @@ class dragDrop
                 self.stopDrag(event, pieceImg);
             });
         
-        
         /*
         pieceImg.addEventListener("mousedown", 
             function start(event)

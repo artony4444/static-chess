@@ -32,6 +32,8 @@ class logic
     {
         this.stalemate = false;
         this.checkmate = false;
+        this.draw = false;
+        this.insufficientMaterial = false;
     }
     
     resetPieceList()
@@ -190,6 +192,8 @@ class logic
     
     getMovesList(fromXY)
     {
+        if(this.draw || this.checkmate) return [];
+        
         let piece = this.board.getPiece(fromXY);
         if(piece.color != this.turn) return [];
         
@@ -275,10 +279,12 @@ class logic
                         if(move == 20) // short
                         {
                             if(!(this.wsCastle)) break;
+                            if(this.board.hasPiece(toXY)) break; // added to ignore this move while using getAttackers() to look for check.
                         }
                         if(move == -20) // long
                         {
                             if(!(this.wlCastle)) break;
+                            if(this.board.hasPiece(toXY)) break;
                         }
                     }
                     else if(piece.color == c.b)
@@ -286,10 +292,12 @@ class logic
                         if(move == 20) // short
                         {
                             if(!(this.bsCastle)) break;
+                            if(this.board.hasPiece(toXY)) break;
                         }
                         if(move == -20) // long
                         {
                             if(!(this.blCastle)) break;
+                            if(this.board.hasPiece(toXY)) break;
                         }
                     }
                 }
@@ -584,6 +592,7 @@ class logic
         this.board.resetMoves();
         this.movesMap.clear();
         
+        this.isInsufficientMaterial();
         this.isStalemate();
         this.isCheck();
     }
@@ -662,6 +671,7 @@ class logic
         if(this.checkStalemate())
         {
             this.board.ui.boardCenterAnimation("STALEMATE");
+            this.draw = true;
             this.stalemate = true;
             return true;
         }
@@ -681,6 +691,86 @@ class logic
             }
         }
         return true;
+    }
+    
+    isInsufficientMaterial()
+    {
+        let isDraw = this.checkIsInsufficientMaterial();
+        if(isDraw)
+        {
+            this.board.ui.boardCenterAnimation("DRAW");
+            this.draw = true;
+            this.insufficientMaterial = true;
+            return true;
+        }
+        return false;
+    }
+    
+    checkIsInsufficientMaterial()
+    {
+        let wP = this.wPieces;
+        let bP = this.bPieces;
+        
+        if(wP.length <= 3 && bP.length <= 3)
+        {
+            for(let p of wP)
+            {
+                if(isOtherPiece(p)) return false;
+            }
+            for(let p of bP)
+            {
+                if(isOtherPiece(p)) return false;
+            }
+            
+            let wBishop = 0;
+            let wKnight = 0;
+            let bBishop = 0;
+            let bKnight = 0;
+            
+            wP.forEach((p) => {
+                if(p instanceof bishop) wBishop += 1;
+                else if(p instanceof knight) wKnight += 1;
+            });
+            
+            bP.forEach((p) => {
+                if(p instanceof bishop) bBishop += 1;
+                else if(p instanceof knight) bKnight += 1;
+            });
+            
+            /*
+            
+            USCF Rule
+            
+            k-bb       - no draw
+            k-nn K-B   - no draw
+            k-bn       - no draw
+            
+            k-nn - draw
+            k-b  - draw
+            k-n  - draw
+            k    - draw
+            
+            */
+            
+            if(wBishop == 2 || bBishop == 2) return false;
+            if((wKnight == 2 && bBishop == 1) || (bKnight == 2 && wBishop == 1)) return false; 
+            if((wBishop == 1 && wKnight == 1) || (bBishop == 1 && bKnight == 1)) return false; 
+            
+            /*
+            if(wBishop == 0 && wKnight == 0 && bBishop == 0 && bKnight == 0) return true;
+            else return false;
+            */
+            
+            return true;
+        }
+        return false;
+        
+        function isOtherPiece(p)
+        {
+            if(!(p instanceof king || 
+                 p instanceof bishop || 
+                 p instanceof knight)) return true;
+        }
     }
     
     askPawnPromote(toXY)
