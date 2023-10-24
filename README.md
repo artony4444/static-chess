@@ -1,6 +1,9 @@
 page - [test now (mobile)](https://artony4444.github.io/static-chess/)
 
-
+one line import
+```html
+<script src="static-chess.js" staticChess="id"></script>
+```
 
 ## features
 
@@ -12,6 +15,7 @@ page - [test now (mobile)](https://artony4444.github.io/static-chess/)
 + checkmate
 + stalemate
 + insufficient material
++ 50 moves draw
 + FEN import
 
 ### ui
