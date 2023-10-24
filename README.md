@@ -31,11 +31,19 @@ mobile page - [artony4444.github.io/static-chess](https://artony4444.github.io/s
 ##
 ## Import
 
-Paste it where you want `Chess Board`
+Paste it where you want chess board
 
 ```html
 <script src="static-chess.js" staticChess="id"></script>
 ```
+src :
+make sure you locate `static-chess.js` and update src accordingly.
+for example `../../downloads/chess/static-chess.js`.
+
+<br>
+
+staticChess :
+update id just incase you want multiple board in one html.
 
 ##
 ## Files
