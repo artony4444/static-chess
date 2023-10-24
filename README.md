@@ -1,6 +1,7 @@
 # ♟ Static Chess
 mobile page - [artony4444.github.io/static-chess](https://artony4444.github.io/static-chess/)
 
+
 ##
 ## Features
 
@@ -28,22 +29,25 @@ mobile page - [artony4444.github.io/static-chess](https://artony4444.github.io/s
 - board eval
 - bot
 
+
 ##
 ## Import
 
 Paste it where you want chess board
 
 ```html
-<script src="static-chess.js" staticChess="id"></script>
+<script src='static-chess.js' staticChess='id'></script>
 ```
-src :
-make sure you locate `static-chess.js` and update src accordingly.
-for example `../../downloads/chess/static-chess.js`.
 
-<br>
+`src`
+ <br>
+Make sure you locate 'static-chess.js' and update src accordingly for example '../downloads/chess/static-chess.js'.
+ <br> 
+ <br> 
+`staticChess`
+ <br> 
+Update id if you want multiple board in one html, which makes each board unique from one another.
 
-staticChess :
-update id just incase you want multiple board in one html.
 
 ##
 ## Files
