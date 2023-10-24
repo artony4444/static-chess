@@ -6,7 +6,7 @@ class board
     {
         this.id = id;
         this.squares = [];
-        this.container = document.getElementById(containerId);
+        this.container = document.getElementById(containerId); if(this.container == null) {console.log("invalid div id : \""+containerId+"\""); console.log("example :", `\n<div id="01234"></div>\n<script src="static-chess.js" divID="01234"></script>`); return;}
         this.color = color;
         this.initialize();
     }
