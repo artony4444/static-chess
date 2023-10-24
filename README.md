@@ -1,11 +1,8 @@
-page - [test now (mobile)](https://artony4444.github.io/static-chess/)
+# ♟ Static Chess
+mobile page - [artony4444.github.io/static-chess](https://artony4444.github.io/static-chess/)
 
-one line import
-```html
-<script src="static-chess.js" staticChess="id"></script>
-```
-
-## features
+##
+## Features
 
 ### script
 + legal moves generation
@@ -23,7 +20,7 @@ one line import
 + touch move
 + piece highlight
 + board construction
-
+  
 ### to add
 - moves history
 - pgn import
@@ -31,9 +28,17 @@ one line import
 - board eval
 - bot
 
+##
+## Import
 
+Paste it where you want `Chess Board`
 
-## files
+```html
+<script src="static-chess.js" staticChess="id"></script>
+```
+
+##
+## Files
 ```
 js
 |
