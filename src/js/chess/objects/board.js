@@ -118,6 +118,12 @@ class board
     
     importFEN(FEN)
     {
+        this.importFenPieces(FEN);
+        this.updateFenState(FEN);
+    }
+    
+    importFenPieces(FEN)
+    {
         let fen = FEN.split("/");
         
         let x = 0, y = 7;
@@ -148,6 +154,29 @@ class board
             --y;
             x = 0;
         }
+    }
+    
+    updateFenState(FEN)
+    {
+        // FEN b KQkq e3 0 1
+        let fen = FEN.split(" ");
+        if(fen.length != 6) return;
+        
+        this.logic.turn = fen[1] == "b" ? c.b : c.w;
+        
+        this.logic.wsCastle = fen[2].includes("K") ? true : false;
+        this.logic.wlCastle = fen[2].includes("Q") ? true : false;
+        this.logic.bsCastle = fen[2].includes("k") ? true : false;
+        this.logic.blCastle = fen[2].includes("q") ? true : false;
+        
+        if(get.str2int(fen[3]) != string.invalid)
+        {
+            let pCap = get.str2int(fen[3]);
+            this.logic.lastPawnMove = pCap % 10 == 3 ? pCap + 1 : null;
+            this.logic.lastPawnMove = pCap % 10 == 6 ? pCap - 1 : null;
+        }
+        
+        this.logic.shortMoves = fen[4];
     }
     
     /*  ----------  move  ----------  */

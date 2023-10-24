@@ -57,6 +57,7 @@ class logic
     {
         this.lastPawnMove = null;
         this.pawnPromote = null;
+        this.shortMoves = 0;
     }
     
     resetKingVars()
@@ -169,9 +170,14 @@ class logic
         }
         
         this.lastPawnMove = addPawnMove;
+        this.updateStates(pieceMoved, pieceKilled, fromXY, toXY);
+    }
+   
+    updateStates(pieceMoved, pieceKilled, fromXY, toXY)
+    {
         this.castleAffected(pieceMoved, pieceKilled, fromXY, toXY);
+        this.addShortMove(pieceMoved, pieceKilled);
         this.moveMarkAdd(fromXY, toXY);
-        
         this.switchTurn();
     }
     
@@ -585,18 +591,6 @@ class logic
         return piece;
     }
     
-    switchTurn()
-    {
-        this.turn = this.turn == c.w ? c.b : c.w;
-        
-        this.board.resetMoves();
-        this.movesMap.clear();
-        
-        this.isInsufficientMaterial();
-        this.isStalemate();
-        this.isCheck();
-    }
-    
     castleAffected(pieceMoved, pieceKilled, fromXY, toXY)
     {
         if(pieceMoved instanceof king)
@@ -666,12 +660,52 @@ class logic
         }
     }
     
+    
+    
+    
+    
+    switchTurn()
+    {
+        this.turn = this.turn == c.w ? c.b : c.w;
+        
+        this.board.resetMoves();
+        this.movesMap.clear();
+        
+        this.is50MoveDraw();
+        this.isInsufficientMaterial();
+        this.isStalemate();
+        this.isCheck();
+    }
+    
+    makeDraw()
+    {
+        this.board.ui.boardCenterAnimation("DRAW");
+        this.draw = true;
+    }
+    
+    askDraw()
+    {
+        
+    }
+    
+    is50MoveDraw()
+    {
+        if(this.shortMoves >= 100) makeDraw();
+    }
+    
+    addShortMove(pieceMoved, pieceKilled)
+    {
+        if(pieceMoved instanceof pawn) this.shortMoves = 0;
+        else if(!(pieceKilled instanceof blank)) this.shortMoves = 0;
+        else this.shortMoves += 1;
+    }
+    
     isStalemate()
     {
         if(this.checkStalemate())
         {
+            this.makeDraw();
             this.board.ui.boardCenterAnimation("STALEMATE");
-            this.draw = true;
             this.stalemate = true;
             return true;
         }
@@ -698,8 +732,7 @@ class logic
         let isDraw = this.checkIsInsufficientMaterial();
         if(isDraw)
         {
-            this.board.ui.boardCenterAnimation("DRAW");
-            this.draw = true;
+            this.makeDraw();
             this.insufficientMaterial = true;
             return true;
         }
@@ -756,7 +789,7 @@ class logic
             if((wKnight == 2 && bBishop == 1) || (bKnight == 2 && wBishop == 1)) return false; 
             if((wBishop == 1 && wKnight == 1) || (bBishop == 1 && bKnight == 1)) return false; 
             
-            /*
+            /* enable this to draw only k vs k
             if(wBishop == 0 && wKnight == 0 && bBishop == 0 && bKnight == 0) return true;
             else return false;
             */
