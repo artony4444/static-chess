@@ -690,7 +690,7 @@ class logic
     
     is50MoveDraw()
     {
-        if(this.shortMoves >= 100) makeDraw();
+        if(this.shortMoves >= 100) this.makeDraw();
     }
     
     addShortMove(pieceMoved, pieceKilled)
