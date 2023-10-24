@@ -4,7 +4,7 @@ class string
 {
     static invalid = "invalid";
     
-    static piecesFolder = "assets/pieces/wiki/";
+    static piecesFolder = address+"assets/pieces/wiki/";
     static extension = ".png";
     
     static boardClass = "board";
