@@ -34,19 +34,10 @@ mobile page - [artony4444.github.io/static-chess](https://artony4444.github.io/s
 ## Import
 
 Paste it where you want chess board
-
 ```html
-<script src='static-chess.js' staticChess='id'></script>
+<script src="static-chess.js"></script>
 ```
-
-`src`
- <br>
-Make sure you locate 'static-chess.js' and update src accordingly for example '../downloads/chess/static-chess.js'.
- <br> 
- <br> 
-`staticChess`
- <br> 
-Update id if you want multiple board in one html, which makes each board unique from one another.
+Make sure you locate `static-chess.js` and update src accordingly for example `../downloads/chess/static-chess.js`.
 
 
 ##
@@ -73,3 +64,4 @@ js
 |    converter   :    converts different data types
 |
 ```
+
