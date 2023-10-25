@@ -206,20 +206,23 @@ class ui
                 return;
             }
             
-            self.addedPiece.add(img);
-            
             img.addEventListener("load", function (e) {
-            
+                
+                if(!(img.isConnected)) return;
+                
                 self.loadedPiece.add(img);
                 
-                // console.log(self.loadedPiece.size, self.addedPiece.size, img.alt);
+                let images = self.container.querySelectorAll('.piece');
                 
-                if(self.loadedPiece.size >= self.addedPiece.size)
+                // console.log(self.loadedPiece.size, images.length, img.alt);
+                
+                if(self.loadedPiece.size >= images.length)
                 {
-                    self.loadedPiece.forEach((piece) => {
+                    images.forEach((piece) => {
                     
                         piece.classList.remove('hidden');
                         // console.log(piece.className);
+                        
                         
                         piece.classList.add('fadeIn');
                         piece.addEventListener("animationend", function () {
@@ -228,6 +231,7 @@ class ui
                         
                     });
                     
+                    //self.loadedPiece = new Set();
                 }
                 
             });
