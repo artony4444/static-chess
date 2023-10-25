@@ -231,7 +231,7 @@ class ui
                         
                     });
                     
-                    self.loadedPiece = new Set();
+                    //self.loadedPiece = new Set();
                 }
                 
             });
