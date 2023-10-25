@@ -1,5 +1,4 @@
 
-
 class string
 {
     static invalid = "invalid";

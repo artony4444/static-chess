@@ -21,6 +21,7 @@ class ui
         this.htmlVars();
         
         this.loadedPiece = new Set();
+        this.addedPiece = new Set();
     }
     
     htmlVars()
@@ -208,7 +209,7 @@ class ui
             
             img.addEventListener("load", function (e) {
                 
-                if(!(img.isConnected)) return;
+                // if(!(img.isConnected)) return;
                 
                 self.loadedPiece.add(img);
                 
@@ -231,7 +232,7 @@ class ui
                         
                     });
                     
-                    //self.loadedPiece = new Set();
+                    // self.loadedPiece = new Set();
                 }
                 
             });
