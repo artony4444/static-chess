@@ -208,7 +208,7 @@ class ui
             
             img.addEventListener("load", function (e) {
                 
-                if(!(img.isConnected)) return;
+                //if(!(img.isConnected)) return;
                 
                 self.loadedPiece.add(img);
                 
