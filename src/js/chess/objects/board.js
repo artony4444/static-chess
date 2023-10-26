@@ -221,9 +221,4 @@ class board
     {
         return get.int2str(intXY) == string.invalid;
     }
-    
-    sayHi()
-    {
-        console.log("hello");
-    }
 }

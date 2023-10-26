@@ -846,9 +846,4 @@ class logic
         }
         else return c.blank;
     }
-    
-    sayHi()
-    {
-        console.log("hello");
-    }
 }

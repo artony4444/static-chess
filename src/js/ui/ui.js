@@ -21,7 +21,7 @@ class ui
         this.htmlVars();
         
         this.loadedPiece = new Set();
-        this.addedPiece = new Set();
+        this.addedPiece = new Set();        
     }
     
     htmlVars()
@@ -187,11 +187,10 @@ class ui
         {
             let img = document.createElement("img");
             
-            img.className = "piece unselectable hidden";
-            img.src = piece.src;// string.piecesFolder + piece.img[0] + string.extension;
+            img.className = "piece unselectable";
+            img.src = piece.src;
             img.alt = piece.name[1];
             unhidePiecesAfterLoad(img);
-            
             
             self.dragDrop.addDragDrop(img);
             
@@ -201,29 +200,23 @@ class ui
         
         function unhidePiecesAfterLoad(img)
         {
-            if(img.complete)
-            {
-                img.classList.remove('hidden');
-                return;
-            }
+            if(img.complete) {return;}
+            
+            img.classList.add('hidden');
+            self.addedPiece.add(img);
             
             img.addEventListener("load", function (e) {
-                
-                // if(!(img.isConnected)) return;
-                
+            
                 self.loadedPiece.add(img);
                 
-                let images = self.container.querySelectorAll('.piece');
+                // console.log(self.loadedPiece.size, self.addedPiece.size, img.alt);
                 
-                // console.log(self.loadedPiece.size, images.length, img.alt);
-                
-                if(self.loadedPiece.size >= images.length)
+                if(self.loadedPiece.size >= self.addedPiece.size)
                 {
-                    images.forEach((piece) => {
+                    self.addedPiece.forEach((piece) => {
                     
                         piece.classList.remove('hidden');
                         // console.log(piece.className);
-                        
                         
                         piece.classList.add('fadeIn');
                         piece.addEventListener("animationend", function () {
@@ -232,7 +225,8 @@ class ui
                         
                     });
                     
-                    // self.loadedPiece = new Set();
+                    self.addedPiece = new Set();
+                    self.loadedPiece = new Set();
                 }
                 
             });
