@@ -1,4 +1,4 @@
-//let c = color;
+
 
 class logic
 {
@@ -9,6 +9,8 @@ class logic
         
         this.variables();
     }
+    
+    /*  ----------  variables  ----------  */
     
     variables()
     {
@@ -73,6 +75,8 @@ class logic
         this.isCheck();
     }
     
+    /*  ----------  square  ----------  */
+    
     setPiece(piece, intXY)
     {
         let pc = piece;
@@ -96,6 +100,8 @@ class logic
         pc.pos = intXY;
         this.board.testPlace(pc, intXY);
     }
+    
+    /*  ----------  move  ----------  */
     
     move(toXY)
     {
@@ -180,6 +186,295 @@ class logic
         this.moveMarkAdd(fromXY, toXY);
         this.switchTurn();
     }
+    
+    castleAffected(pieceMoved, pieceKilled, fromXY, toXY)
+    {
+        if(pieceMoved instanceof king)
+        {
+            if(pieceMoved.color == color.w)
+            {
+                this.wsCastle = false;
+                this.wlCastle = false;
+            }
+            if(pieceMoved.color == color.b)
+            {
+                this.bsCastle = false;
+                this.blCastle = false;
+            }
+        }
+        else if(pieceMoved instanceof rook)
+        {
+            if(pieceMoved.color == color.w)
+            {
+                if(fromXY == 81)
+                {
+                    this.wsCastle = false;
+                }
+                if(fromXY == 11)
+                {
+                    this.wlCastle = false;
+                }
+            }
+            if(pieceMoved.color == color.b)
+            {
+                if(fromXY == 88)
+                {
+                    this.bsCastle = false;
+                }
+                if(fromXY == 18)
+                {
+                    this.blCastle = false;
+                }
+            }
+        }
+        
+        
+        if(pieceKilled instanceof rook)
+        {
+            if(pieceKilled.color == color.w)
+            {
+                if(toXY == 81)
+                {
+                    this.wsCastle = false;
+                }
+                if(toXY == 11)
+                {
+                    this.wlCastle = false;
+                }
+            }
+            if(pieceKilled.color == color.b)
+            {
+                if(toXY == 88)
+                {
+                    this.bsCastle = false;
+                }
+                if(toXY == 18)
+                {
+                    this.blCastle = false;
+                }
+            }
+        }
+    }
+    
+    addShortMove(pieceMoved, pieceKilled)
+    {
+        // 50 moves draw state
+        if(pieceMoved instanceof pawn) this.shortMoves = 0;
+        else if(!(pieceKilled instanceof blank)) this.shortMoves = 0;
+        else this.shortMoves += 1;
+    }
+    
+    moveMarkAdd(fromXY, toXY)
+    {
+        this.board.ui.squareHighlightRemove("moveMark");
+        this.board.ui.squareHighlightAdd("moveMark", fromXY);
+        this.board.ui.squareHighlightAdd("moveMark", toXY);
+    }
+    
+    switchTurn()
+    {
+        this.turn = this.turn == c.w ? c.b : c.w;
+        
+        this.board.resetMoves();
+        this.movesMap.clear();
+        
+        this.is50MoveDraw();
+        this.isInsufficientMaterial();
+        this.isStalemate();
+        this.isCheck();
+    }
+    
+    // --- draw
+    
+    makeDraw()
+    {
+        this.board.ui.boardCenterAnimation("DRAW");
+        this.draw = true;
+    }
+    
+    askDraw()
+    {
+        // to add ui.askDraw()
+    }
+    
+    is50MoveDraw()
+    {
+        if(this.shortMoves >= 100) this.makeDraw();
+    }
+    
+    isInsufficientMaterial()
+    {
+        let isDraw = this.checkIsInsufficientMaterial();
+        if(isDraw)
+        {
+            this.makeDraw();
+            this.insufficientMaterial = true;
+            return true;
+        }
+        return false;
+    }
+    
+    checkIsInsufficientMaterial()
+    {
+        let wP = this.wPieces;
+        let bP = this.bPieces;
+        
+        if(wP.length <= 3 && bP.length <= 3)
+        {
+            for(let p of wP)
+            {
+                if(isOtherPiece(p)) return false;
+            }
+            for(let p of bP)
+            {
+                if(isOtherPiece(p)) return false;
+            }
+            
+            let wBishop = 0;
+            let wKnight = 0;
+            let bBishop = 0;
+            let bKnight = 0;
+            
+            wP.forEach((p) => {
+                if(p instanceof bishop) wBishop += 1;
+                else if(p instanceof knight) wKnight += 1;
+            });
+            
+            bP.forEach((p) => {
+                if(p instanceof bishop) bBishop += 1;
+                else if(p instanceof knight) bKnight += 1;
+            });
+            
+            /*
+            
+            USCF Rule
+            
+            k-bb       - no draw
+            k-nn K-B   - no draw
+            k-bn       - no draw
+            
+            k-nn - draw
+            k-b  - draw
+            k-n  - draw
+            k    - draw
+            
+            */
+            
+            if(wBishop == 2 || bBishop == 2) return false;
+            if((wKnight == 2 && bBishop == 1) || (bKnight == 2 && wBishop == 1)) return false; 
+            if((wBishop == 1 && wKnight == 1) || (bBishop == 1 && bKnight == 1)) return false; 
+            
+            /* enable this to draw only k vs k
+            if(wBishop == 0 && wKnight == 0 && bBishop == 0 && bKnight == 0) return true;
+            else return false;
+            */
+            
+            return true;
+        }
+        return false;
+        
+        function isOtherPiece(p)
+        {
+            if(!(p instanceof king || 
+                 p instanceof bishop || 
+                 p instanceof knight)) return true;
+        }
+    }
+    
+    isStalemate()
+    {
+        if(this.checkStalemate())
+        {
+            this.makeDraw();
+            this.board.ui.boardCenterAnimation("STALEMATE");
+            this.stalemate = true;
+            return true;
+        }
+        else this.stalemate = false;
+        return false;
+    }
+    
+    checkStalemate()
+    {
+        let pieces = this.getPiecesByTurn();
+        
+        for(let piece of pieces)
+        {
+            if(this.getTestMovesList(piece.pos).length != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    checkTest(color = this.turn)
+    {
+        let king = null;
+        
+        if(this[color+"King"] != null) king = this[color+"King"];
+        else
+        {
+            let kingName = color == c.w ? w.king : b.king;
+            king = this.getPieceByName(kingName);
+            this[color+"King"] = king;
+        }
+        if(king == null) return;
+        
+        let isCheck = this.getAttackers(king.pos).length > 0;
+        return isCheck;
+    }
+    
+    isCheck(color = this.turn)
+    {
+        this.board.ui.checkRemove();
+        
+        let king = null;
+        
+        if(this[color+"King"] != null) king = this[color+"King"];
+        else
+        {
+            let kingName = color == c.w ? w.king : b.king;
+            king = this.getPieceByName(kingName);
+            this[color+"King"] = king;
+        }
+        if(king == null) return;
+        
+        let isCheck = this.getAttackers(king.pos).length > 0;
+        
+        if(isCheck)
+        {
+            this.board.ui.checkAdd(king.pos);
+            
+            if(this.stalemate) // checkmate
+            {
+                this.board.ui.boardCenterAnimation("CHECKMATE");
+                this.stalemate = false;
+                this.checkmate = true;
+            }
+        }
+        
+        return isCheck;
+    }
+    
+    // --- Pawn Promotion
+    
+    askPawnPromote(toXY)
+    {
+        this.board.ui.askPawnPromote(toXY);
+    }
+    
+    promotePawnTo(piece, toXY)
+    {
+        if(piece.color == this.turn && this.board.currentMoves.includes(toXY))
+        {
+            this.pawnPromote = piece;
+            this.move(toXY);
+        }
+        else console.log("invalid")
+    }
+    
+    /*  ----------  moves generation  ----------  */
     
     getTestMovesList(fromXY)
     {
@@ -421,6 +716,47 @@ class logic
         return legalMoves;
     }
     
+    /*  ----------  attackers  ----------  */
+    
+    getAttackers(intXY, color)
+    {
+        return this.victim2attacker(intXY, color);
+    }
+    
+    
+    victim2attacker(intXY, color)
+    {
+        let attackers = [];
+        let victim = this.board.getPiece(intXY);
+        
+        let col = color
+        
+        if(col == undefined) col = victim.color == c.w ? c.b : c.w;
+        
+        let allPiece = col == c.w ? this.wPieces : this.bPieces;
+        let pieces = Array.from(new Set(allPiece));  // filter duplicate pieces, potential attackers list
+        
+        for(let piece of pieces)
+        {
+            let attacker = piece;
+            let pieceMover = Piece.switchColor(piece);
+            
+            let moves = this.getPieceMoves(pieceMover, intXY);
+            
+            for(let move of moves)
+            {
+                let foundPiece = this.board.getPiece(move);
+                
+                if(foundPiece.name == attacker.name)
+                {
+                    attackers.push(foundPiece);
+                }
+            }
+        }
+        return attackers;
+    }
+    
+    /*  ----------  piece list  ----------  */
     
     listAddPiece(piece)
     {
@@ -488,98 +824,7 @@ class logic
         }
     }
     
-    
-    
-    
-    
-    
-    
-    getAttackers(intXY, color)
-    {
-        return this.victim2attacker(intXY, color);
-    }
-    
-    
-    victim2attacker(intXY, color)
-    {
-        let attackers = [];
-        let victim = this.board.getPiece(intXY);
-        
-        let col = color
-        
-        if(col == undefined) col = victim.color == c.w ? c.b : c.w;
-        
-        let allPiece = col == c.w ? this.wPieces : this.bPieces;
-        let pieces = Array.from(new Set(allPiece));  // filter duplicate pieces, potential attackers list
-        
-        for(let piece of pieces)
-        {
-            let attacker = piece;
-            let pieceMover = Piece.switchColor(piece);
-            
-            let moves = this.getPieceMoves(pieceMover, intXY);
-            
-            for(let move of moves)
-            {
-                let foundPiece = this.board.getPiece(move);
-                
-                if(foundPiece.name == attacker.name)
-                {
-                    attackers.push(foundPiece);
-                }
-            }
-        }
-        return attackers;
-    }
-    
-    checkTest(color = this.turn)
-    {
-        let king = null;
-        
-        if(this[color+"King"] != null) king = this[color+"King"];
-        else
-        {
-            let kingName = color == c.w ? w.king : b.king;
-            king = this.getPieceByName(kingName);
-            this[color+"King"] = king;
-        }
-        if(king == null) return;
-        
-        let isCheck = this.getAttackers(king.pos).length > 0;
-        return isCheck;
-    }
-    
-    isCheck(color = this.turn)
-    {
-        this.board.ui.checkRemove();
-        
-        let king = null;
-        
-        if(this[color+"King"] != null) king = this[color+"King"];
-        else
-        {
-            let kingName = color == c.w ? w.king : b.king;
-            king = this.getPieceByName(kingName);
-            this[color+"King"] = king;
-        }
-        if(king == null) return;
-        
-        let isCheck = this.getAttackers(king.pos).length > 0;
-        
-        if(isCheck)
-        {
-            this.board.ui.checkAdd(king.pos);
-            
-            if(this.stalemate) // checkmate
-            {
-                this.board.ui.boardCenterAnimation("CHECKMATE");
-                this.stalemate = false;
-                this.checkmate = true;
-            }
-        }
-        
-        return isCheck;
-    }
+    /*  ----------  helper  ----------  */
     
     getPieceByName(name)
     {
@@ -589,244 +834,6 @@ class logic
         this.bPieces.forEach((p) => {if(p.name == name) piece = p;});
         
         return piece;
-    }
-    
-    castleAffected(pieceMoved, pieceKilled, fromXY, toXY)
-    {
-        if(pieceMoved instanceof king)
-        {
-            if(pieceMoved.color == color.w)
-            {
-                this.wsCastle = false;
-                this.wlCastle = false;
-            }
-            if(pieceMoved.color == color.b)
-            {
-                this.bsCastle = false;
-                this.blCastle = false;
-            }
-        }
-        else if(pieceMoved instanceof rook)
-        {
-            if(pieceMoved.color == color.w)
-            {
-                if(fromXY == 81)
-                {
-                    this.wsCastle = false;
-                }
-                if(fromXY == 11)
-                {
-                    this.wlCastle = false;
-                }
-            }
-            if(pieceMoved.color == color.b)
-            {
-                if(fromXY == 88)
-                {
-                    this.bsCastle = false;
-                }
-                if(fromXY == 18)
-                {
-                    this.blCastle = false;
-                }
-            }
-        }
-        
-        
-        if(pieceKilled instanceof rook)
-        {
-            if(pieceKilled.color == color.w)
-            {
-                if(toXY == 81)
-                {
-                    this.wsCastle = false;
-                }
-                if(toXY == 11)
-                {
-                    this.wlCastle = false;
-                }
-            }
-            if(pieceKilled.color == color.b)
-            {
-                if(toXY == 88)
-                {
-                    this.bsCastle = false;
-                }
-                if(toXY == 18)
-                {
-                    this.blCastle = false;
-                }
-            }
-        }
-    }
-    
-    
-    
-    
-    
-    switchTurn()
-    {
-        this.turn = this.turn == c.w ? c.b : c.w;
-        
-        this.board.resetMoves();
-        this.movesMap.clear();
-        
-        this.is50MoveDraw();
-        this.isInsufficientMaterial();
-        this.isStalemate();
-        this.isCheck();
-    }
-    
-    makeDraw()
-    {
-        this.board.ui.boardCenterAnimation("DRAW");
-        this.draw = true;
-    }
-    
-    askDraw()
-    {
-        
-    }
-    
-    is50MoveDraw()
-    {
-        if(this.shortMoves >= 100) this.makeDraw();
-    }
-    
-    addShortMove(pieceMoved, pieceKilled)
-    {
-        if(pieceMoved instanceof pawn) this.shortMoves = 0;
-        else if(!(pieceKilled instanceof blank)) this.shortMoves = 0;
-        else this.shortMoves += 1;
-    }
-    
-    isStalemate()
-    {
-        if(this.checkStalemate())
-        {
-            this.makeDraw();
-            this.board.ui.boardCenterAnimation("STALEMATE");
-            this.stalemate = true;
-            return true;
-        }
-        else this.stalemate = false;
-        return false;
-    }
-    
-    checkStalemate()
-    {
-        let pieces = this.getPiecesByTurn();
-        
-        for(let piece of pieces)
-        {
-            if(this.getTestMovesList(piece.pos).length != 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    isInsufficientMaterial()
-    {
-        let isDraw = this.checkIsInsufficientMaterial();
-        if(isDraw)
-        {
-            this.makeDraw();
-            this.insufficientMaterial = true;
-            return true;
-        }
-        return false;
-    }
-    
-    checkIsInsufficientMaterial()
-    {
-        let wP = this.wPieces;
-        let bP = this.bPieces;
-        
-        if(wP.length <= 3 && bP.length <= 3)
-        {
-            for(let p of wP)
-            {
-                if(isOtherPiece(p)) return false;
-            }
-            for(let p of bP)
-            {
-                if(isOtherPiece(p)) return false;
-            }
-            
-            let wBishop = 0;
-            let wKnight = 0;
-            let bBishop = 0;
-            let bKnight = 0;
-            
-            wP.forEach((p) => {
-                if(p instanceof bishop) wBishop += 1;
-                else if(p instanceof knight) wKnight += 1;
-            });
-            
-            bP.forEach((p) => {
-                if(p instanceof bishop) bBishop += 1;
-                else if(p instanceof knight) bKnight += 1;
-            });
-            
-            /*
-            
-            USCF Rule
-            
-            k-bb       - no draw
-            k-nn K-B   - no draw
-            k-bn       - no draw
-            
-            k-nn - draw
-            k-b  - draw
-            k-n  - draw
-            k    - draw
-            
-            */
-            
-            if(wBishop == 2 || bBishop == 2) return false;
-            if((wKnight == 2 && bBishop == 1) || (bKnight == 2 && wBishop == 1)) return false; 
-            if((wBishop == 1 && wKnight == 1) || (bBishop == 1 && bKnight == 1)) return false; 
-            
-            /* enable this to draw only k vs k
-            if(wBishop == 0 && wKnight == 0 && bBishop == 0 && bKnight == 0) return true;
-            else return false;
-            */
-            
-            return true;
-        }
-        return false;
-        
-        function isOtherPiece(p)
-        {
-            if(!(p instanceof king || 
-                 p instanceof bishop || 
-                 p instanceof knight)) return true;
-        }
-    }
-    
-    askPawnPromote(toXY)
-    {
-        this.board.ui.askPawnPromote(toXY);
-    }
-    
-    promotePawnTo(piece, toXY)
-    {
-        if(piece.color == this.turn && this.board.currentMoves.includes(toXY))
-        {
-            this.pawnPromote = piece;
-            this.move(toXY);
-        }
-        else console.log("invalid")
-    }
-    
-    
-    moveMarkAdd(fromXY, toXY)
-    {
-        this.board.ui.squareHighlightRemove("moveMark");
-        this.board.ui.squareHighlightAdd("moveMark", fromXY);
-        this.board.ui.squareHighlightAdd("moveMark", toXY);
     }
     
     getPiecesByTurn()

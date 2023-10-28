@@ -1,20 +1,20 @@
 // task - convert append child to insertAdjacentHTML (makes code small)
+// task - remove multiple remove() code.
 
 class ui
 {
-    
     constructor(board)
     {
         this.container = board.container;
         this.board = board;
         this.color = this.board.color;
-        
         this.boardHTML = null;
-        
         this.dragDrop = new dragDrop(this.board);
         
         this.variables();
     }
+    
+    /*  ----------  variables  ----------  */
     
     variables()
     {
@@ -34,6 +34,7 @@ class ui
         this.childsTab = this.newLine + this.tab.repeat(this.parentTab+3);
     }
     
+    /*  ----------  board  ----------  */
     
     clear(boardId, isWhiteSide, notation = true)
     {
@@ -140,11 +141,6 @@ class ui
         return board;
     }
     
-    
-    
-    
-    
-    
     setPiece(piece, intXY)
     {
         let squareId = get.toStr(intXY);
@@ -233,16 +229,6 @@ class ui
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     setMove(intXY)
     {
         let square = this.getSquare(intXY);
@@ -287,10 +273,6 @@ class ui
         this.selectorRemove();
         this.dragDrop.releseFreeze();
     }
-    
-    
-    
-    
     
     selectorAdd(toXY)
     {
@@ -365,7 +347,6 @@ class ui
         }
     }
     
-    
     boardCenterAnimation(str)
     {
         this.freezeAdd();
@@ -397,7 +378,6 @@ class ui
             });
         }
     }
-    
     
     askPawnPromote(toXY)
     {
@@ -503,8 +483,6 @@ class ui
         }
     }
     
-    
-    
     squareHighlightAdd(str, toXY)
     {
         let square = this.getSquare(toXY);
@@ -527,21 +505,7 @@ class ui
         }
     }
     
-    
-    
-    
-    
-    // task - remove multiple remove code.
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /*  ----------  helpers  ----------  */
     
     getPiece(intXY)
     {
@@ -557,13 +521,6 @@ class ui
     {
         return this.container.querySelector("."+get.int2str(intXY));
     }
-    
-    
-    
-    
-    
-    
-    
     
     nextLine(intTab)
     {

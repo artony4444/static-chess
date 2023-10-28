@@ -1,6 +1,5 @@
 
 
-
 class dragDrop
 {
     constructor(board)
@@ -18,23 +17,12 @@ class dragDrop
         this.freezedPiece = [];
     }
     
-    
-    
-    
-    
-    
-    
+    /*  ----------  event  ----------  */
     
     addDragDrop(pieceImg)
     {
         let self = this;
-        /*
-        pieceImg.addEventListener("click", 
-            function start(event)
-            {
-                self.startDrag(event, pieceImg);
-            });
-        */
+        
         pieceImg.addEventListener("touchstart",
             function start(event)
             {
@@ -53,7 +41,15 @@ class dragDrop
                 self.stopDrag(event, pieceImg);
             });
         
+        // task - to make this compatable for desktop
+        
         /*
+        pieceImg.addEventListener("click", 
+            function start(event)
+            {
+                self.startDrag(event, pieceImg);
+            });
+        
         pieceImg.addEventListener("mousedown", 
             function start(event)
             {
@@ -74,7 +70,6 @@ class dragDrop
         */
     }
     
-    
     addTouchMove(moveImg)
     {
         this.freezePiece(moveImg);
@@ -88,6 +83,7 @@ class dragDrop
             });
     }
     
+    /*  ----------  touch  ----------  */
     
     touchMove(event, moveImg)
     {
@@ -95,33 +91,7 @@ class dragDrop
         this.board.logic.move(toXY);
     }
     
-    
-    
-    
-    
-    
-    
-    
-    // Drag Drop
-    
-    
-    removeMovesIfThisIsSecondClick(pieceImg)
-    {
-        if(this.movesShowing() && this.lastPiece == pieceImg)
-        {
-            this.timeout = setTimeout(function (self, pieceImg) 
-            {
-                if(self.isTouching == false) self.resetMoves();
-            }
-        , 100, this, pieceImg);
-        }
-        
-        this.lastPiece = pieceImg;
-    }
-    
-    
-    
-    
+    /*  ----------  drag-drop  ----------  */
     
     startDrag(event, pieceImg)
     {
@@ -141,6 +111,21 @@ class dragDrop
         //this.moveDrag(event, pieceImg);
     }
     
+    removeMovesIfThisIsSecondClick(pieceImg)
+    {
+        if(this.movesShowing() && this.lastPiece == pieceImg)
+        {
+            this.timeout = setTimeout(function (self, pieceImg) 
+            {
+                if(self.isTouching == false) self.resetMoves();
+            }
+        , 100, this, pieceImg);
+        }
+        
+        this.lastPiece = pieceImg;
+    }
+    
+    // --- move
     
     moveDrag(event, pieceImg) 
     {
@@ -159,6 +144,7 @@ class dragDrop
         this.addStyles(pieceImg, x, y);
     }
     
+    // --- stop
     
     stopDrag(event, pieceImg) 
     {
@@ -212,17 +198,7 @@ class dragDrop
         //this.resetMoves();
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    /*  ----------  CSS  ----------  */
     
     addStyles(target, x, y)
     {
@@ -247,62 +223,7 @@ class dragDrop
         target.style.touchAction = 'pinch-zoom';
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    setMoves(pieceImg)
-    {
-        this.board.setMoves(this.img2int(pieceImg));
-    }
-    
-    setResetMoves(pieceImg)
-    {
-        this.board.setResetMoves(this.img2int(pieceImg));
-    }
-    
-    resetMoves()
-    {
-        this.board.resetMoves();
-    }
-    
-    movesShowing()
-    {
-        return this.board.movesShowing();
-    }
-        
-    img2int(pieceImg)
-    {
-        return get.str2int(pieceImg.parentNode.classList[0]);
-    }
-    
-    
-    
-    img2piece(img)
-    {
-        let square = img.parentNode;
-        return square.querySelector(".piece");
-    }
-    
-    
+    /*  ----------  freeze  ----------  */
     
     freezePiece(img)
     {
@@ -323,14 +244,48 @@ class dragDrop
         this.freezedPiece = [];
     }
     
-    
-    
     freezeStyle(piece)
     {
         piece.style.pointerEvents = "none";
     }
+    
     releseFreezeStyle(piece)
     {
         piece.style.pointerEvents = "auto";
+    }
+    
+    /*  ----------  moves  ----------  */
+    
+    setMoves(pieceImg)
+    {
+        this.board.setMoves(this.img2int(pieceImg));
+    }
+    
+    setResetMoves(pieceImg)
+    {
+        this.board.setResetMoves(this.img2int(pieceImg));
+    }
+    
+    resetMoves()
+    {
+        this.board.resetMoves();
+    }
+    
+    movesShowing()
+    {
+        return this.board.movesShowing();
+    }
+    
+    /*  ----------  helper  ----------  */
+        
+    img2int(pieceImg)
+    {
+        return get.str2int(pieceImg.parentNode.classList[0]);
+    }
+    
+    img2piece(img)
+    {
+        let square = img.parentNode;
+        return square.querySelector(".piece");
     }
 }

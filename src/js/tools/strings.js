@@ -1,4 +1,5 @@
 
+
 class string
 {
     static invalid = "invalid";
@@ -8,6 +9,7 @@ class string
     
     static boardClass = "board";
 }
+
 
 class color
 {

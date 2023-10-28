@@ -39,7 +39,8 @@ class king extends piece
         this.moves = king.movesList;
     }
     
-    // castle // (-20) Long // (20) Short
+    // castle 
+    // long(-20) / short(20)
     
     static movesList = [
         [-9], [-10, -20], [-11], [-1], [1], [9], [10, 20], [11]
@@ -144,10 +145,11 @@ class pawn extends piece
         this.moves = col == color.w ? pawn.wPawnMoves : pawn.bPawnMoves;
     }
     
-    // move (1)
-    // start (2)
-    // kill (~11, ~9)
-    // promotion
+    // complications -
+    // move(1)
+    // start(2)
+    // kill(11, 9)
+    // promotion(y1, y8)
     
     static wPawnMoves = [
         [1, 2], [11], [-9]
@@ -158,6 +160,7 @@ class pawn extends piece
 }
 
 
+/*  ----------  helper classes  ----------  */
 
 
 class w
@@ -201,6 +204,7 @@ class w
     }
 }
 
+
 class b
 {
     static blank =  ["w_blank",   '-'];
@@ -241,6 +245,7 @@ class b
         return new pawn(color.b);
     }
 }
+
 
 class Piece
 {

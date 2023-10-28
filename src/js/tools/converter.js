@@ -1,4 +1,5 @@
 
+
 class xy
 {
     static a1 = 11;
@@ -91,7 +92,6 @@ class get
         return l+y;
     }
     
-    
     static str2int(ay)
     {
         if( ay.length != 2 || Boolean(ay.match(/[a-h][1-8]/)) == false)
@@ -147,7 +147,7 @@ class get
         return this.int2ray(this.str2int(str));
     }
     
-    // DIRECT
+    // --- direct
     
     static toStr(obj)
     {

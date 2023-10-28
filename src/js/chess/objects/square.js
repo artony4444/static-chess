@@ -1,3 +1,5 @@
+
+
 class square
 {
     constructor(id, color = c.blank, piece = w.Blank())

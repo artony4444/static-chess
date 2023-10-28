@@ -8,15 +8,19 @@ class board
         this.squares = [];
         this.container = document.getElementById(containerId); if(this.container == null) {console.log("invalid div id : \""+containerId+"\""); console.log("example :", `\n<div id="01234"></div>\n<script src="static-chess.js" divID="01234"></script>`); return;}
         this.color = color;
+        
         this.initialize();
     }
     
     initialize()
     {
         this.variables();
+        
         this.clear();
         this.assemble();
     }
+    
+    /*  ----------  variables  ----------  */
     
     variables()
     {
@@ -206,6 +210,8 @@ class board
         this.resetCurrentSquare();
         this.ui.resetMoves();
     }
+    
+    /*  ----------  helper  ----------  */
     
     movesShowing()
     {
