@@ -44,11 +44,6 @@ class board
         return this.squares[xy[0]][xy[1]];
     }
     
-    setPiece(piece, intXY)
-    {
-        this.logic.setPiece(piece, intXY);
-    }
-    
     placePiece(piece, intXY)
     {
         this.ui.setPiece(piece, intXY);
@@ -142,13 +137,13 @@ class board
                     
                     for(let a = 0; a < times; a++)
                     {
-                        this.setPiece(w.Blank(), get.ray2int(x, y));
+                        this.logic.setPiece(w.Blank(), get.ray2int(x, y));
                         ++x;
                     }
                 }
                 else
                 {
-                    this.setPiece(Piece.name2piece(chr), get.ray2int(x, y));
+                    this.logic.setPiece(Piece.name2piece(chr), get.ray2int(x, y));
                     ++x;
                 }
                 if(x > 7) break;

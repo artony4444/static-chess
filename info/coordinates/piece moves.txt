@@ -1,0 +1,72 @@
+refer : src/js/chess/objects/pieces.js
+
+Piece Moves -
+    
+    all pieces have an array
+    which contains their moves
+    
+    
+    for instance,
+    
+    rook moves = [
+        up    : [1, 2, 3, 4, 5, 6, 7, 8],
+        down  : [-1, -2, -3, -4, -5, -6, -7, -8],
+        right : [10, 20, 30, 40, 50, 60, 70, 80],
+        left  : [-10, -20, -30, -40, -50, -60, -70, -80]
+    ];
+    
+    
+    rook moves -
+    
+    ⬛⬆️⬛
+    ⬅️⬛➡️
+    ⬛⬇️⬛
+    
+    up, down, left, right
+    
+    I've grouped all directions 
+    in one array for a reason,
+    
+    
+    [ Problem ]
+    
+    if you are calculating moves for rook
+    and there is a piece in between how 
+    would you stop adding up moves that 
+    go across the pieces?
+    
+    here is how I do
+    
+    
+    rook 1
+    
+    looping moves..
+    
+    ⬆️ - - - - - - - ->
+    ⬇️ - - - - - - - ->
+    ➡️ - - - - - - - ->
+    ⬅️ - - - - - - - ->
+    
+    up | down | right | left
+    
+    no pieces / wall found 
+    all moves are valid
+    
+    
+    rook 2
+    
+    looping moves..
+    
+    ⬆️ - - - - - - ■
+    ⬇️ - - - ■
+    ➡️ - - - - - - - ->
+    ⬅️ - - - - - ■
+    
+    up | down | right | left
+    
+    breaks loop at ■
+    where piece found!
+    
+    
+    
+    great!! isnt it?

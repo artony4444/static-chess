@@ -122,15 +122,15 @@ class logic
                 {
                     let rook = this.board.getPiece(toXY + 10);
                     
-                    this.board.setPiece(w.Blank(), toXY + 10);
-                    this.board.setPiece(rook, toXY - 10);
+                    this.setPiece(w.Blank(), toXY + 10);
+                    this.setPiece(rook, toXY - 10);
                 }
                 else if(move == -20)
                 {
                     let rook = this.board.getPiece(toXY - 20);
                     
-                    this.board.setPiece(w.Blank(), toXY - 20);
-                    this.board.setPiece(rook, toXY + 10);
+                    this.setPiece(w.Blank(), toXY - 20);
+                    this.setPiece(rook, toXY + 10);
                 }
             }
             else if(pieceMoved instanceof pawn)
@@ -153,20 +153,20 @@ class logic
                 }
                 else if(toXY + enPassantPos == this.lastPawnMove)
                 {
-                    this.board.setPiece(w.Blank(), this.lastPawnMove);
+                    this.setPiece(w.Blank(), this.lastPawnMove);
                 }
             }
             
             if(isPawnPromotion)
             {
-                this.board.setPiece(w.Blank(), fromXY);
-                this.board.setPiece(this.pawnPromote, toXY);
+                this.setPiece(w.Blank(), fromXY);
+                this.setPiece(this.pawnPromote, toXY);
                 this.pawnPromote = null;
             }
             else
             {
-                this.board.setPiece(w.Blank(), fromXY);
-                this.board.setPiece(pieceMoved, toXY);
+                this.setPiece(w.Blank(), fromXY);
+                this.setPiece(pieceMoved, toXY);
             }
         }
         else
