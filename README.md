@@ -1,6 +1,7 @@
 # ♟ Static Chess
-mobile page - [artony4444.github.io/static-chess](https://artony4444.github.io/static-chess/)
 
+> Try now (mobile page) -<br> [artony4444.github.io/static-chess](https://artony4444.github.io/static-chess/) <br> <br>
+Contact me -<br> [artony4444@gmail.com](mailto:artony4444@gmail.com)
 
 ##
 ## Features
