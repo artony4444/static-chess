@@ -34,11 +34,15 @@ Contact me -<br> [artony4444@gmail.com](mailto:artony4444@gmail.com)
 ##
 ## Import
 
-Paste it where you want chess board
+**Without Download -** <br>
+```html
+<script src="https://artony4444.github.io/static-chess/static-chess.js"></script>
+```
+**With Download -**
 ```html
 <script src="static-chess.js"></script>
 ```
-Make sure you locate `static-chess.js` and update src accordingly for example `../downloads/chess/static-chess.js`.
+Make sure you locate `static-chess.js` and update src accordingly for example `../downloads/chess/static-chess.js` <br>
 
 
 ##
