@@ -29,8 +29,6 @@ div.id = boardID;
 div.staticChess = boardID;
 dcs.replaceWith(div);
 
-//let body = document.getElementsByTagName('body')[0];
-
 let jsClassesSRC = [
     address+"src/js/tools/strings.js",
     address+"src/js/tools/converter.js",
@@ -69,11 +67,19 @@ function loadScriptSequentially()
     }
 }
 
-/* debug
 
-if(loadedCount == jsClassesSRC.length - 1)
-{
-    console.log(document.getElementsByTagName('html')[0].innerHTML);
-}
+/* 
 
+    <---- debug ---->
+    
+    if(loadedCount == jsClassesSRC.length - 1)
+    {
+        console.log(document.getElementsByTagName('html')[0].innerHTML);
+    }
+    
+    
+    <---- changes ---->
+    
+    body.appendChild >> div.appendChild
+    
 */
