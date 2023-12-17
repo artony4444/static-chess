@@ -36,9 +36,7 @@ Contact me -<br> [artony4444@gmail.com](mailto:artony4444@gmail.com)
 
 **Without Download -** <br>
 ```html
-<div>
-    <script src="https://artony4444.github.io/static-chess/static-chess.js"></script>
-</div>
+<script src="https://artony4444.github.io/static-chess/static-chess.js"></script>
 ```
 **With Download -**
 ```html
