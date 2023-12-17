@@ -29,7 +29,7 @@ div.id = boardID;
 div.staticChess = boardID;
 dcs.replaceWith(div);
 
-let body = document.getElementsByTagName('body')[0];
+//let body = document.getElementsByTagName('body')[0];
 
 let jsClassesSRC = [
     address+"src/js/tools/strings.js",
@@ -64,12 +64,12 @@ function loadScriptSequentially()
             loadScriptSequentially();
         };
 
-        body.appendChild(sc);
+        div.appendChild(sc);
         sc.insertAdjacentHTML("afterend", "\n    ");
     }
 }
 
-/*
+/* debug
 
 if(loadedCount == jsClassesSRC.length - 1)
 {
