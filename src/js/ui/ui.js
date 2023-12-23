@@ -40,8 +40,7 @@ class ui
     {
         let parent = this.container;
         
-        let board = document.createElement('div');
-        board.id = boardId;
+        let board = document.createElement('div'); // board.id = boardId;
         board.className = string.boardClass;
         
         parent.innerHTML = this.boardTab;

@@ -10,7 +10,7 @@ class logic
         this.variables();
     }
     
-    /*  ----------  variables  ----------  */
+    /*  ----------  initialize  ----------  */
     
     variables()
     {

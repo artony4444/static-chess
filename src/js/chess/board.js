@@ -2,11 +2,11 @@ let c = color; // color class
 
 class board
 {
-    constructor(id, containerId, color = c.w)
+    constructor(id, color = c.w)
     {
         this.id = id;
         this.squares = [];
-        this.container = document.getElementById(containerId); if(this.container == null) {console.log("invalid div id : \""+containerId+"\""); console.log("example :", `\n<div id="01234"></div>\n<script src="static-chess.js" divID="01234"></script>`); return;}
+        this.container = document.getElementById(id); if(this.container == null) console.log("invalid div id : \""+containerId+"\"");
         this.color = color;
         
         this.initialize();
@@ -20,7 +20,7 @@ class board
         this.assemble();
     }
     
-    /*  ----------  variables  ----------  */
+    /*  ----------  initialize  ----------  */
     
     variables()
     {
@@ -52,6 +52,7 @@ class board
     
     testPlace(piece, intXY)
     {
+        // no changes in ui 
         this.getSquare(intXY).piece = piece;
     }
     
@@ -157,7 +158,7 @@ class board
     
     updateFenState(FEN)
     {
-        // FEN b KQkq e3 0 1
+        // FEN = ( b KQkq e3 0 1)
         let fen = FEN.split(" ");
         if(fen.length != 6) return;
         
